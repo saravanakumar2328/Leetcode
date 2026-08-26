@@ -1,30 +1,37 @@
 class Solution {
     public String shortestBeautifulSubstring(String s, int k) {
-        String ans = "";
-        int left = 0, countOnes = 0;
-        int n = s.length();
+        String min = "";
+        int m = s.length() + 1; // Start higher than maximum possible length
+        
+        // Loop through every possible starting point
+        for (int i = 0; i < s.length(); i++) {
+            int sum = 0;
 
-        for (int right = 0; right < n; right++) {
-           
-            if (s.charAt(right) == '1') {
-                countOnes++;
-            }
-
-            while (countOnes == k) {
-                String currentSubstring = s.substring(left, right + 1);
-                
-               
-                if (ans.isEmpty() || currentSubstring.length() < ans.length()) {
-                    ans = currentSubstring;
-                } else if (currentSubstring.length() == ans.length() && currentSubstring.compareTo(ans) < 0) {
-                    ans = currentSubstring;
+            // Loop through every possible ending point
+            for (int j = i; j < s.length(); j++) {
+                // Count '1's using fast character checks instead of parseInt
+                if (s.charAt(j) == '1') {
+                    sum++;
                 }
 
-                if (s.charAt(left) == '1') {
-                    countOnes--;
+                // If we found exactly k '1's
+                if (sum == k) {
+                    int currentLength = j - i + 1;
+                    String currentString = s.substring(i, j + 1);
+
+                    // Update if it's shorter OR if it's the same length but alphabetically smaller
+                    if (currentLength < m) {
+                        m = currentLength;
+                        min = currentString;
+                    } else if (currentLength == m && currentString.compareTo(min) < 0) {
+                        min = currentString;
+                    }
+                    
+                    // Break early because adding more characters will only make it longer
+                    break; 
                 }
-                left++;
             }
         }
-        return ans;}
+        return min;
+    }
 }
