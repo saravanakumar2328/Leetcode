@@ -1,55 +1,34 @@
 class Solution {
     public boolean isValid(String s) {
-        String[] ss=s.split("");
-        String []sss=new String[ss.length];
-        int top=-1;
 
-        for(int i=0;i<ss.length;i++){
-            if(ss[i].equals("(")||ss[i].equals("{")||ss[i].equals("[")){
-                sss[++top]=ss[i];
+        char[] stack = new char[s.length()];
+        int top = -1;
 
+        for (char ch : s.toCharArray()) {
+
+            // Opening brackets → Push
+            if (ch == '(' || ch == '{' || ch == '[') {
+                stack[++top] = ch;
             }
-            else{
-                if(top>-1){
-                    if(ss[i].equals(")")){
-                        if(!sss[top].equals("(")){
-                            return false;
-                        }
-                        else{
-                            top--;
-                        }
 
-                    }
-                    else if(ss[i].equals("}")){
-                         if(!sss[top].equals("{")){
-                            return false;
-                        }
-                        else{
-                            top--;
-                        }
-
-                    }
-                    else{
-                        if(!sss[top].equals("[")){
-                            return false;
-                        }
-                        else{
-                            top--;
-                        }
-                    }
+            // Closing brackets
+            else {
+                // Stack is empty
+                if (top == -1) {
+                    return false;
                 }
-                else{
+
+                char open = stack[top--];
+
+                if ((ch == ')' && open != '(') ||
+                    (ch == '}' && open != '{') ||
+                    (ch == ']' && open != '[')) {
                     return false;
                 }
             }
-           
-
         }
-        if(top==-1){
-            return true;
-        }
-        return false;
 
-        
+        // Stack should be empty
+        return top == -1;
     }
 }
