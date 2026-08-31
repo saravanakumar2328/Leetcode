@@ -6,14 +6,14 @@ class Solution {
 
         for (char ch : s.toCharArray()) {
 
-            // Opening brackets → Push
+            
             if (ch == '(' || ch == '{' || ch == '[') {
                 stack[++top] = ch;
             }
 
-            // Closing brackets
+     
             else {
-                // Stack is empty
+                
                 if (top == -1) {
                     return false;
                 }
@@ -28,7 +28,7 @@ class Solution {
             }
         }
 
-        // Stack should be empty
+        
         return top == -1;
     }
 }
