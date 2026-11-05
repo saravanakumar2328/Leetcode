@@ -9,6 +9,7 @@ class Solution {
                 int k=Math.abs(arr1[i]-arr2[j]);
                 if(d>=k){
                     f=false;
+                    break;
                 }
             }
             if(f){
